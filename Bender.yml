@@ -28,7 +28,7 @@ export_include_dirs:
 
 sources:
   - rtl/cgra/CGRA.sv
-  - trl/cgra/FF_rv.sv
+  - rtl/cgra/FF_rv.sv
   - rtl/cgra/FU_control_superpolyvalent.sv
   - rtl/cgra/FU_data_superpolyvalent.sv
   - rtl/cgra/PC_superpolyvalent.sv
