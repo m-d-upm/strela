@@ -59,35 +59,41 @@ module CGRA
         end
     end
 
-    // Bitstream clockgate
-    cgra_clock_gate clk_gate_pe_i
-    (
-        .clk_i     ( clk_bs ),
-        .test_en_i ( 1'b0 ),
-        .en_i      ( bitstream_enable_i ),
-        .clk_o     ( clk_bs_cg )
-    );
+    // // Bitstream clockgate
+    // cgra_clock_gate clk_gate_pe_i
+    // (
+    //     .clk_i     ( clk_bs ),
+    //     .test_en_i ( 1'b0 ),
+    //     .en_i      ( bitstream_enable_i ),
+    //     .clk_o     ( clk_bs_cg )
+    // );
+    
+    // Removed clock gate
+    assign clk_bs_cg = clk_bs;
 
-    // PE clock gates
-    generate
-        for(genvar i = 0; i < 16; i++) begin
-            always_ff @(posedge clk or negedge rst_n_bs) begin : clk_gate_reg
-                if(~rst_n_bs) begin
-                    clk_gate_en[i] <= 1'b0;
-                end else if(catch_config[i]) begin
-                    clk_gate_en[i] <= 1'b1;
-                end
-            end
+    // // PE clock gates
+    // generate
+    //     for(genvar i = 0; i < 16; i++) begin
+    //         always_ff @(posedge clk or negedge rst_n_bs) begin : clk_gate_reg
+    //             if(~rst_n_bs) begin
+    //                 clk_gate_en[i] <= 1'b0;
+    //             end else if(catch_config[i]) begin
+    //                 clk_gate_en[i] <= 1'b1;
+    //             end
+    //         end
 
-            cgra_clock_gate clk_gate_pe_i
-            (
-                .clk_i     ( clk            ),
-                .test_en_i ( 1'b0           ),
-                .en_i      ( clk_gate_en[i] && execute_i ),
-                .clk_o     ( clk_pe[i]      )
-            );
-        end
-    endgenerate
+    //         cgra_clock_gate clk_gate_pe_i
+    //         (
+    //             .clk_i     ( clk            ),
+    //             .test_en_i ( 1'b0           ),
+    //             .en_i      ( clk_gate_en[i] && execute_i ),
+    //             .clk_o     ( clk_pe[i]      )
+    //         );
+    //     end
+    // endgenerate
+
+    // Removed clock gate
+    assign clk_pe = {16{clk}};
 
     // Split inputs
     for (genvar i = 0; i < 4; i++) begin
