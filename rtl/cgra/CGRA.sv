@@ -33,8 +33,7 @@ module CGRA
     // Config signals
     logic [143:0]   config_wire;
     logic [5:0]     enables_wire;
-    logic [15:0]    catch_config, clk_gate_en, clk_pe;
-    logic           clk_bs_cg;
+    logic [15:0]    catch_config;
 
     // Internal data signals
     logic [3:0][2:0][DATA_WIDTH-1:0] hor_we, hor_ew;
@@ -59,7 +58,10 @@ module CGRA
         end
     end
 
-    // // Bitstream clockgate
+    /* TO-DO: explore proper clock gate implementation when using FPGA targets
+    // logic clk_bs_cg;
+    // logic [15:0] clk_pe;
+    // Bitstream clockgate
     // cgra_clock_gate clk_gate_pe_i
     // (
     //     .clk_i     ( clk_bs ),
@@ -67,11 +69,10 @@ module CGRA
     //     .en_i      ( bitstream_enable_i ),
     //     .clk_o     ( clk_bs_cg )
     // );
-    
-    // Removed clock gate
-    assign clk_bs_cg = clk_bs;
+    */
 
-    // // PE clock gates
+    /*
+    // PE clock gates
     // generate
     //     for(genvar i = 0; i < 16; i++) begin
     //         always_ff @(posedge clk or negedge rst_n_bs) begin : clk_gate_reg
@@ -91,9 +92,7 @@ module CGRA
     //         );
     //     end
     // endgenerate
-
-    // Removed clock gate
-    assign clk_pe = {16{clk}};
+    */
 
     // Split inputs
     for (genvar i = 0; i < 4; i++) begin
@@ -116,8 +115,8 @@ module CGRA
     )
     PE_0
     (
-        .clk            ( clk_pe[0] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -155,8 +154,8 @@ module CGRA
     )
     PE_1
     (
-        .clk            ( clk_pe[1] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -194,8 +193,8 @@ module CGRA
     )
     PE_2
     (
-        .clk            ( clk_pe[2] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -233,8 +232,8 @@ module CGRA
     )
     PE_3
     (
-        .clk            ( clk_pe[3] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -272,8 +271,8 @@ module CGRA
     )
     PE_4
     (
-        .clk            ( clk_pe[4] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -311,8 +310,8 @@ module CGRA
     )
     PE_5
     (
-        .clk            ( clk_pe[5] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -350,8 +349,8 @@ module CGRA
     )
     PE_6
     (
-        .clk            ( clk_pe[6] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -389,8 +388,8 @@ module CGRA
     )
     PE_7
     (
-        .clk            ( clk_pe[7] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -428,8 +427,8 @@ module CGRA
     )
     PE_8
     (
-        .clk            ( clk_pe[8] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -467,8 +466,8 @@ module CGRA
     )
     PE_9
     (
-        .clk            ( clk_pe[9] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -506,8 +505,8 @@ module CGRA
     )
     PE_10
     (
-        .clk            ( clk_pe[10] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -545,8 +544,8 @@ module CGRA
     )
     PE_11
     (
-        .clk            ( clk_pe[11] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -584,8 +583,8 @@ module CGRA
     )
     PE_12
     (
-        .clk            ( clk_pe[12] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -623,8 +622,8 @@ module CGRA
     )
     PE_13
     (
-        .clk            ( clk_pe[13] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -662,8 +661,8 @@ module CGRA
     )
     PE_14
     (
-        .clk            ( clk_pe[14] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
@@ -701,8 +700,8 @@ module CGRA
     )
     PE_15
     (
-        .clk            ( clk_pe[15] ),
-        .clk_bs         ( clk_bs_cg ),
+        .clk            ( clk ),
+        .clk_bs         ( clk_bs ),
         .rst_n          ( rst_n ),
         .rst_n_bs       ( rst_n_bs ),
         .config_bits    ( config_wire ),
