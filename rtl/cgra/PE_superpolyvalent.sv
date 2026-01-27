@@ -45,6 +45,10 @@ module PE_superpolyvalent #(
 );
   // synopsys sync_set_reset clr_i
 
+  // localparam int CONF_ITER = (DATA_WIDTH == 32) ? 5 : (DATA_WIDTH == 64) ? 3 : 0; // 32-bit version of STRELA uses five 32-bit words for config, 64-bit version uses three 64-bit words
+  localparam real CONF_SIZE_BITS = 160.0;
+  localparam int CONF_ITER = int'($ceil(CONF_SIZE_BITS / DATA_WIDTH)); // 32-bit version of STRELA uses five 32-bit words for config, 64-bit version uses three 64-bit words
+
   // Config signals
   logic [2:0] mux_sel_n, mux_sel_e, mux_sel_s, mux_sel_w;
   logic [1:0] data_mux_sel_n, data_mux_sel_e, data_mux_sel_s, data_mux_sel_w;
@@ -76,7 +80,7 @@ module PE_superpolyvalent #(
     if (!rst_ni) begin
       conf_reg <= 0;
     end else begin
-      if (conf_en_i && conf_cnt < 5) begin
+      if (conf_en_i && conf_cnt < CONF_ITER) begin
         conf_reg <= conf_wire;
       end
     end
@@ -88,13 +92,13 @@ module PE_superpolyvalent #(
     end else begin
       if (clr_i) begin
         conf_cnt <= 0;
-      end else if (conf_en_i && conf_cnt < 5) begin
+      end else if (conf_en_i && conf_cnt < CONF_ITER) begin
         conf_cnt <= conf_cnt + 1;
       end
     end
   end
 
-  assign conf_en_o = conf_en_i && conf_cnt == 5;
+  assign conf_en_o = conf_en_i && conf_cnt == CONF_ITER;
 
   // Configuration decoding
   assign mask_fs_n = conf_reg[5:0];
