@@ -1,0 +1,29 @@
+// Copyright 2025 CEI-UPM
+// Solderpad Hardware License, Version 2.1, see LICENSE for details.
+// SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
+// Daniel Vazquez (daniel.vazquez@upm.es)
+
+module shifter #(
+  parameter int DATA_WIDTH = 32
+) (
+  input logic [DATA_WIDTH-1:0] a_i,
+  input logic [DATA_WIDTH-1:0] b_i,
+  input logic sr_mode_i,
+  output logic [DATA_WIDTH-1:0] res_o
+);
+
+  logic signed [$clog2(DATA_WIDTH):0] shift_amt;
+  assign shift_amt = $signed(b_i[$clog2(DATA_WIDTH):0]);
+
+  DW01_ash #(
+    .A_width (DATA_WIDTH),
+    .SH_width($clog2(DATA_WIDTH) + 1)
+  ) U1 (
+    .A(a_i),
+    .DATA_TC(sr_mode_i & a_i[DATA_WIDTH-1]),
+    .SH(shift_amt),
+    .SH_TC(shift_amt[$clog2(DATA_WIDTH)]),
+    .B(res_o)
+  );
+
+endmodule

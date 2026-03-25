@@ -1,28 +1,28 @@
 // Copyright 2024 CEI-UPM
-// Solderpad Hardware License, Version 2.1, see LICENSE.md for details.
+// Solderpad Hardware License, Version 2.1, see LICENSE for details.
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // Daniel Vazquez (daniel.vazquez@upm.es)
 
 module elastic_buffer #(
-    parameter int DATA_WIDTH = 32
+  parameter int DATA_WIDTH = 32
 ) (
-    // Clock and reset
-    input logic clk_i,
-    input logic rst_ni,
-    input logic clr_i,
+  // Clock and reset
+  input logic clk_i,
+  input logic rst_ni,
+  input logic clr_i,
 
-    // Control
-    input logic en_i,
+  // Control
+  input logic en_i,
 
-    // Input data
-    input  logic [DATA_WIDTH-1:0] din_i,
-    input  logic                  din_v_i,
-    output logic                  din_r_o,
+  // Input data
+  input  logic [DATA_WIDTH-1:0] din_i,
+  input  logic                  din_v_i,
+  output logic                  din_r_o,
 
-    // Output data
-    output logic [DATA_WIDTH-1:0] dout_o,
-    output logic                  dout_v_o,
-    input  logic                  dout_r_i
+  // Output data
+  output logic [DATA_WIDTH-1:0] dout_o,
+  output logic                  dout_v_o,
+  input  logic                  dout_r_i
 );
   // synopsys sync_set_reset clr_i
 
