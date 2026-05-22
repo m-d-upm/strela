@@ -13,9 +13,15 @@ module shifter #(
 );
 
   logic signed [$clog2(DATA_WIDTH):0] shift_amt;
-  assign shift_amt = $signed(b_i[$clog2(DATA_WIDTH):0]);
+  assign shift_amt = $signed(b_i);
 
-  DW01_ash #(
+`ifdef ASIC
+  `define ASH_MOD DW01_ash
+`else
+  `define ASH_MOD ash
+`endif
+
+  `ASH_MOD #(
     .A_width (DATA_WIDTH),
     .SH_width($clog2(DATA_WIDTH) + 1)
   ) U1 (

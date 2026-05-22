@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1
 // Daniel Vazquez (daniel.vazquez@upm.es)
 
-module multiplier_pe #(
+module multiplier #(
   parameter int DATA_WIDTH = 32
 ) (
   input  logic signed [DATA_WIDTH-1:0] a_i,
@@ -12,10 +12,16 @@ module multiplier_pe #(
 );
 
   logic signed [DATA_WIDTH/2-1:0] a, b;
-  assign a = a_i[DATA_WIDTH/2-1:0];
-  assign b = b_i[DATA_WIDTH/2-1:0];
+  assign a = a_i;
+  assign b = b_i;
 
-  DW02_mult #(
+`ifdef ASIC
+  `define MULT_MOD DW02_mult
+`else
+  `define MULT_MOD mult
+`endif
+
+  `MULT_MOD #(
     .A_width(DATA_WIDTH / 2),
     .B_width(DATA_WIDTH / 2)
   ) U1 (

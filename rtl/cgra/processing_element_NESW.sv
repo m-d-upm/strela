@@ -520,7 +520,7 @@ module processing_element_NESW
     .DATA_WIDTH(DATA_WIDTH)
   ) MUX_1 (
     .sel_i(mux_sel_1),
-    .mux_i({dout, constant, west_din_i, south_din_i, east_din_i, north_din_i}),
+    .mux_i({dout, constant, west_buffer, south_buffer, east_buffer, north_buffer}),
     .mux_o(EB_din_1)
   );
 
@@ -529,7 +529,7 @@ module processing_element_NESW
     .DATA_WIDTH(1)
   ) MUX_1_v (
     .sel_i(mux_sel_1),
-    .mux_i({dout_v, 1'b1, west_din_v_i, south_din_v_i, east_din_v_i, north_din_v_i}),
+    .mux_i({dout_v, 1'b1, west_buffer_v, south_buffer_v, east_buffer_v, north_buffer_v}),
     .mux_o(EB_din_1_v)
   );
 
@@ -554,7 +554,7 @@ module processing_element_NESW
     .DATA_WIDTH(DATA_WIDTH)
   ) MUX_2 (
     .sel_i(mux_sel_2),
-    .mux_i({dout, constant, west_din_i, south_din_i, east_din_i, north_din_i}),
+    .mux_i({dout, constant, west_buffer, south_buffer, east_buffer, north_buffer}),
     .mux_o(EB_din_2)
   );
 
@@ -563,7 +563,7 @@ module processing_element_NESW
     .DATA_WIDTH(1)
   ) MUX_2_v (
     .sel_i(mux_sel_2),
-    .mux_i({dout_v, 1'b1, west_din_v_i, south_din_v_i, east_din_v_i, north_din_v_i}),
+    .mux_i({dout_v, 1'b1, west_buffer_v, south_buffer_v, east_buffer_v, north_buffer_v}),
     .mux_o(EB_din_2_v)
   );
 
@@ -591,7 +591,7 @@ module processing_element_NESW
         .DATA_WIDTH(1)
       ) MUX_C (
         .sel_i(mux_sel_c),
-        .mux_i({west_din_i[0], south_din_i[0], east_din_i[0], north_din_i[0]}),
+        .mux_i({west_buffer[0], south_buffer[0], east_buffer[0], north_buffer[0]}),
         .mux_o(jm_cin)
       );
 
@@ -600,7 +600,7 @@ module processing_element_NESW
         .DATA_WIDTH(1)
       ) MUX_C_v (
         .sel_i(mux_sel_c),
-        .mux_i({west_din_v_i, south_din_v_i, east_din_v_i, north_din_v_i}),
+        .mux_i({west_buffer_v, south_buffer_v, east_buffer_v, north_buffer_v}),
         .mux_o(jm_cin_v)
       );
     end else begin : gen_no_cin

@@ -12,7 +12,15 @@ module adder_substracter #(
   output logic [DATA_WIDTH-1:0] res_o
 );
 
-  DW01_addsub #(
+  logic carry_out;
+
+`ifdef ASIC
+  `define ADDSUB_MOD DW01_addsub
+`else
+  `define ADDSUB_MOD addsub
+`endif
+
+  `ADDSUB_MOD #(
     .width(DATA_WIDTH)
   ) U1 (
     .A(a_i),
@@ -20,7 +28,7 @@ module adder_substracter #(
     .CI(1'b0),
     .ADD_SUB(addsub_mode_i),
     .SUM(res_o),
-    .CO()
+    .CO(carry_out)
   );
 
 endmodule

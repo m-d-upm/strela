@@ -109,7 +109,7 @@ module functional_unit #(
   // ---- Add / Subtract ----
   if (HAS_ADDSUB) begin : gen_addsub
     logic addsub_mode;
-    // alu_sel 0 -> ADD (bit[0]=0), alu_sel 1 -> SUB (bit[0]=1)
+    // alu_sel 0 → ADD (bit[0]=0), alu_sel 1 → SUB (bit[0]=1)
     assign addsub_mode = alu_sel_i[0];
 
     adder_substracter #(
@@ -126,7 +126,7 @@ module functional_unit #(
 
   // ---- Multiply ----
   if (HAS_MUL) begin : gen_mul
-    multiplier_pe #(
+    multiplier #(
       .DATA_WIDTH(DATA_WIDTH)
     ) mul_i (
       .a_i  (din_1_i),
@@ -140,7 +140,7 @@ module functional_unit #(
   // ---- Shift left / right ----
   if (HAS_SHIFT) begin : gen_shift
     logic sr_mode;
-    // alu_sel 3 -> SHL (sr_mode=0), alu_sel 4 -> SHR (sr_mode=1)
+    // alu_sel 3 → SHL (sr_mode=0), alu_sel 4 → SHR (sr_mode=1)
     assign sr_mode = (alu_sel_i == 3'd4);
 
     shifter #(
